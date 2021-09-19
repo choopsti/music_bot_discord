@@ -9,6 +9,7 @@ from discord.utils import get
 from discord import FFmpegPCMAudio
 import asyncio
 import time
+import os
 
 bot = commands.Bot(command_prefix='!')
 
@@ -115,5 +116,5 @@ async def 지금노래(ctx):
 async def 신승민_바보(ctx):
     await ctx.send("신승민 바보")
 
-
-bot.run("ODg5MTA3MzAxOTY4MDE5NTA4.YUcbsw.w1iJxAr8Q2WiePE5iEmDeHTMpZs")
+access_token = os.environ['BOT_TOKEN']
+bot.run(access_token)
