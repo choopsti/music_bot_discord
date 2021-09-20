@@ -13,21 +13,37 @@ import os
 
 bot = commands.Bot(command_prefix='!')
 
+user = []
+musictitle = []
+song_queue = []
+musicnow = []
+
+def load_chrome_driver():
+      
+    options = webdriver.ChromeOptions()
+
+    options.binary_location = os.getenv('GOOGLE_CHROME_BIN')
+
+    options.add_argument('--headless')
+    # options.add_argument('--disable-gpu')
+    options.add_argument('--no-sandbox')
+
+    return webdriver.Chrome(executable_path=str(os.environ.get('CHROME_EXECUTABLE_PATH')), chrome_options=options)
+
 @bot.event
 async def on_ready():
     print('다음으로 로그인합니다: ')
     print(bot.user.name)
     print('connection was succesful')
     await bot.change_presence(status=discord.Status.online, activity=None)
+    
+    if not discord.opus.is_loaded():
+        disocrd.opus.load_opus("opus")
 
 @bot.command()
 async def 명령어(ctx):
-    await ctx.send("명령어종류:명령어를 사용할때는 !치시고 노래는 !들어와를 사용후 해주세요(이미 들어와있으면 상관없음)\n!명령어 : 명령어를 알수있음\n!들어와 : 디스코드 봇이 음성채널에 들어간다\n!나가:디스코드 봇이 음성채널에 나간다\n!URL재생:URL이 재생된다\n!재생:노래가 재생된다\n!일시정지:정지된다!다시시작:다시시작된다\n!지금노래:지금노래 제목이 나온다\n!노래끄기:노래가 꺼진다\n!신승민_바보:신승민은 바보다")
+    await ctx.send("명령어종류:명령어를 사용할때는 !치시고 노래는 !들어와를 사용후 해주세요(이미 들어와있으면 상관없음)\n!명령어 : 명령어를 알수있음\n!나가:디스코드 봇이 음성채널에 나간다\n!URL재생:URL이 재생된다\n!재생:노래가 재생된다\n!일시정지:정지된다!다시시작:다시시작된다\n!지금노래:지금노래 제목이 나온다\n!노래끄기:노래가 꺼진다\n!신승민_바보:신승민은 바보다")
 
-@bot.command()
-async def 들어와(ctx):
-    global vc
-    vc = await ctx.message.author.voice.channel.connect()
 
 @bot.command()
 async def 나가(ctx):
@@ -38,6 +54,8 @@ async def 나가(ctx):
 
 @bot.command()
 async def URL재생(ctx, *, url):
+    global vc
+    vc = await ctx.message.author.voice.channel.connect()
     YDL_OPTIONS = {'format': 'bestaudio','noplaylist':'True'}
     FFMPEG_OPTIONS = {'before_options': '-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5', 'options': '-vn'}
 
@@ -52,6 +70,9 @@ async def URL재생(ctx, *, url):
 
 @bot.command()
 async def 재생(ctx, *, msg):
+    global vc
+    vc = await ctx.message.author.voice.channel.connect()
+
     if not vc.is_playing():
 
         options = webdriver.ChromeOptions()
@@ -60,8 +81,7 @@ async def 재생(ctx, *, msg):
         YDL_OPTIONS = {'format': 'bestaudio', 'noplaylist':'True'}
         FFMPEG_OPTIONS = {'before_options': '-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5', 'options': '-vn'}
             
-        chromedriver_dir = "C:/Users/nam11/OneDrive/바탕 화면/chromedriver_win32/chromedriver.exe"
-        driver = webdriver.Chrome(chromedriver_dir, options = options)
+        driver = load_chrome_driver()
         driver.get("https://www.youtube.com/results?search_query="+msg+"+lyrics")
         source = driver.page_source
         bs = bs4.BeautifulSoup(source, 'lxml')
@@ -118,3 +138,4 @@ async def 신승민_바보(ctx):
 
 
 bot.run("ODg5MTA3MzAxOTY4MDE5NTA4.YUcbsw.SZKG8OX6eNpuVw6p_sdlmsvtjf4")
+
