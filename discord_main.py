@@ -117,4 +117,4 @@ async def 신승민_바보(ctx):
     await ctx.send("신승민 바보")
 
 
-bot.run("ODg5MTA3MzAxOTY4MDE5NTA4.YUcbsw.w1iJxAr8Q2WiePE5iEmDeHTMpZs")
+bot.run("ODg5MTA3MzAxOTY4MDE5NTA4.YUcbsw.SZKG8OX6eNpuVw6p_sdlmsvtjf4")
