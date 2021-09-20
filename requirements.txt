@@ -1,7 +1,9 @@
-discord.py==1.7.3
-youtil=1.0.1
-youtube-dl=2021.6.6
-discord=1.7.3
-selenium=3.141.0
-bs4=0.0.1
-async-timeout=3.0.1
+asyncio
+selenium
+discord.py[voice]
+pip
+beautifulsoup4
+youtube-dl
+ffmpeg-python
+requests
+urllib3
