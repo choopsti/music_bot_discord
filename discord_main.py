@@ -1,13 +1,10 @@
 import discord
-from discord import voice_client
 from youtube_dl import YoutubeDL
 from discord.ext import commands
 import requests
 from bs4 import BeautifulSoup
 from discord import FFmpegPCMAudio
-import asyncio
-import time
-import bs4
+
 
 bot = commands.Bot(command_prefix = "!")
 
