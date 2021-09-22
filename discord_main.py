@@ -21,9 +21,13 @@ async def 명령어(ctx):
     embed.add_field(name="!명령어", value="명령어 종류가 나온다", inline=False)
     embed.add_field(name="!나가", value="음성채널 퇴장", inline=False)
     embed.add_field(name="!재생", value="음성채널 참가및 노래재생", inline=False)
+    embed.add_field(name="!노래끄기", value="노래가 꺼진다", inline=False)
+    await ctx.message.channel.send(embed=embed) 
 
 @bot.command()
 async def 재생(ctx, msg):
+    global messag1111
+    messag1111 = msg
     global vc 
     vc = await ctx.message.author.voice.channel.connect()
     headers = {'User-Agent' : 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36'}
@@ -41,12 +45,18 @@ async def 재생(ctx, msg):
             info = ydl.extract_info(test, download=False)
         URL = info['formats'][0]['url']
         vc.play(FFmpegPCMAudio(URL, **FFMPEG_OPTIONS))
-        await ctx.send(embed = discord.Embed(title= "노래 재생", description = "현재 " + test + "을(를) 재생하고 있습니다.", color = 0x00ff00))
+        await ctx.send(embed = discord.Embed(title= "노래 재생", description = "현재 " + msg + "을(를) 재생하고 있습니다.", color = 0x00ff00))
     else:
         await ctx.send("노래가 이미 재생되고 있습니다!")
     
 
-
+@bot.command()
+async def 노래끄기(ctx):
+    if vc.is_playing():
+        vc.stop()
+        await ctx.send(embed = discord.Embed(title= "노래끄기", description = messag1111  + "을(를) 종료했습니다.", color = 0x00ff00))
+    else:
+        await ctx.send("지금 노래가 재생되지 않네요.")
 
 @bot.command()
 async def 나가(ctx):
