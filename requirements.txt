@@ -1,10 +1,7 @@
 asyncio
-selenium
 discord.py[voice]
 pip
 beautifulsoup4
 youtube-dl
 ffmpeg-python
-requests
-urllib3
 requests
