@@ -14,7 +14,7 @@ async def on_ready():
     print('다음으로 로그인합니다: ')
     print(bot.user.name)
     print('connection was succesful')
-    await bot.change_presence(status=discord.Status.online, activity=discord.Game('disocrd.py'))
+    await bot.change_presence(status=discord.Status.online, activity=discord.Game('disocrd.py')) #디코봇 상태 설정
 
 @bot.command()
 async def 명령어(ctx):
@@ -37,7 +37,7 @@ async def 재생(ctx, msg):
     bs4 = BeautifulSoup(data.text, 'html.parser')
     test = bs4.find("h3", {"class": "H1u2de"})
     test = test.select("a")
-    test = test[0]['href']
+    test = test[0]['href'] #메세지에 대한 영상링크 얻기
     YDL_OPTIONS = {'format': 'bestaudio','noplaylist':'True'}
     FFMPEG_OPTIONS = {'before_options': '-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5', 'options': '-vn'}
 
@@ -45,7 +45,7 @@ async def 재생(ctx, msg):
         with YoutubeDL(YDL_OPTIONS) as ydl:
             info = ydl.extract_info(test, download=False)
         URL = info['formats'][0]['url']
-        vc.play(FFmpegPCMAudio(URL, **FFMPEG_OPTIONS))
+        vc.play(FFmpegPCMAudio(URL, **FFMPEG_OPTIONS)) #youtube-dl로 받아서 mp3저장후 재생
         await ctx.send(embed = discord.Embed(title= "노래 재생", description = "현재 " + msg + "을(를) 재생하고 있습니다.", color = 0x00ff00))
     else:
         await ctx.send("노래가 이미 재생되고 있습니다!")
