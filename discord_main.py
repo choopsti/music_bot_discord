@@ -4,6 +4,7 @@ from discord.ext import commands
 import requests
 from bs4 import BeautifulSoup
 from discord import FFmpegPCMAudio
+import os
 
 
 bot = commands.Bot(command_prefix = "!")
@@ -62,5 +63,5 @@ async def 노래끄기(ctx):
 async def 나가(ctx):
     await bot.voice_clients[0].disconnect()
 
-
-bot.run("ODg5MTA3MzAxOTY4MDE5NTA4.YUcbsw.SZKG8OX6eNpuVw6p_sdlmsvtjf4")
+access_token = os.environ['BOT_TOKEN']
+bot.run(access_token)
